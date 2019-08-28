@@ -23,5 +23,5 @@ func Init() {
 		v1.GET("/marketDetail", websocket.MarketDetail)
 		v1.GET("/coinHistory", history.CoinHistory)
 	}
-	router.Run(":8000")
+	router.Run(":7577")
 }
