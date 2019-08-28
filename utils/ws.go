@@ -22,15 +22,21 @@ var upGrader = websocket.Upgrader{
 	},
 }
 
+
 type WsCoon struct {
 	conn      *websocket.Conn
 	lastPing  int64 // 上次接收到的ping时间戳
-	closeOnce sync.Once
+	closeOnce sync.Once //once 确保只关闭连接一次
 	//WsChan chan int
-	Closed bool
+	Closed bool   //标志是否已关闭
 }
 
-//初始化websocket连接
+/**
+ * Description:初始化websocket连接
+ * @Return: *WsCoon ; err
+ * @Author: jarvis
+ * @Date: 2019-08-27 13:24
+ */
 func InitWebsocket(c *gin.Context) (wsCoon *WsCoon, err error) {
 	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
@@ -57,7 +63,12 @@ func InitWebsocket(c *gin.Context) (wsCoon *WsCoon, err error) {
 	return wsCoon, err
 }
 
-//关闭连接
+/**
+ * Description: 关闭连接
+ * @Param: *WsConn
+ * @Author: jarvis
+ * @Date: 2019-08-27 14:20
+ */
 func (w *WsCoon) Close() {
 	//once确保只关闭一次
 	w.closeOnce.Do(func() {
@@ -67,7 +78,13 @@ func (w *WsCoon) Close() {
 	})
 }
 
-//读取消息
+/**
+ * Description: 读取消息
+ * @Param: *WsConn
+ * @Return: mType 数据类型； msg 数据内容；err 错误
+ * @Author: jarvis
+ * @Date: 2019-08-27 14:27
+ */
 func (w *WsCoon) ReadMsg() (mType interface{}, msg interface{}, err error) {
 	_, message, err := w.conn.ReadMessage()
 	if err != nil {
@@ -91,13 +108,27 @@ func (w *WsCoon) ReadMsg() (mType interface{}, msg interface{}, err error) {
 	return nil, nil, nil
 }
 
-//写消息
+
+/**
+ * Description:发送消息
+ * @Param: *WsConn
+ * @Return: err 错误
+ * @Author: jarvis
+ * @Date: 2019-08-27 14:41
+ */
 func (w *WsCoon) WriteMsg(messageType int, data []byte) (err error) {
 	err = w.conn.WriteMessage(messageType, data)
 	return err
 }
 
-// 心跳时间检测：检测连接是否长时间无响应
+/**
+ * Description:心跳时间检测：检测连接是否长时间无响应
+   超过六秒未收到来自客户端的ping消息则主动断开与客户端的连接
+ * @Param: *WsConn
+ * @Return: pass 是否透过检测
+ * @Author: jarvis
+ * @Date: 2019-08-27 15:30
+ */
 func (w *WsCoon) HeartBeatTest() (pass bool) {
 	var t = time.Now().Unix()
 	// 检查上次ping时间，如果超过6秒无响应，返回false

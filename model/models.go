@@ -27,3 +27,17 @@ type HistoryItem struct {
 	Vol float64 `json:"vol"`
 	Count int64 `json:"count"`
 }
+
+
+type ExChangeRateStruct struct {
+	Code int               `json:"code"`
+	Data []*RateDataStruct `json:"data"`
+}
+
+
+type RateDataStruct struct {
+	Data_Time uint64  `json:"data_time"`
+	Name      string  `json:"name"`
+	Rate      float64 `json:"rate"`
+	Time      uint64  `json:"time"`
+}

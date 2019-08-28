@@ -14,7 +14,11 @@ import (
 )
 
 
-//K线
+/**
+ * Description: K线socket接口，用于币种详情页面的行情折线图的实现
+ * @Author: jarvis
+ * @Date: 2019-08-28 14:16
+ */
 func Kline(c *gin.Context) {
 	var (
 		isSubscriped    bool
@@ -69,7 +73,12 @@ func Kline(c *gin.Context) {
 
 }
 
-//市场概要
+
+/**
+ * Description:市场概要socket接口，提供24小时内最新市场概要。
+ * @Author: jarvis
+ * @Date: 2019-08-28 14:15
+ */
 func MarketDetail(c *gin.Context) {
 	var (
 		marketCloseOnce sync.Once

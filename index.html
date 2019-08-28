@@ -5,7 +5,11 @@
 
 </body>
 <script>
-    var ws = new WebSocket("ws://localhost:8000/v1/marketDetail");
+    // var ws = new WebSocket("ws://localhost:7577/v1/marketDetail");
+    var ws = new WebSocket("ws://gitlab.tangchaoke.com:7577/v1/marketDetail");
+    // var ws = new WebSocket("ws://gitlab.tangchaoke.com:7577/v1/marketDetail");
+
+    // http://gitlab.tangchaoke.com
     ws.onopen = function (evt) {
         console.log("Connection open ...");
         //

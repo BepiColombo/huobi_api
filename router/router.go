@@ -22,6 +22,7 @@ func Init() {
 		v1.GET("/kline", websocket.Kline)
 		v1.GET("/marketDetail", websocket.MarketDetail)
 		v1.GET("/coinHistory", history.CoinHistory)
+		v1.GET("/rate", history.Rate)
 	}
 	router.Run(":7577")
 }
