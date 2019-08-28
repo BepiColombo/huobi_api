@@ -1,0 +1,35 @@
+<html>
+
+<body>
+
+
+</body>
+<script>
+    var ws = new WebSocket("ws://localhost:8000/v1/marketDetail");
+    ws.onopen = function (evt) {
+        console.log("Connection open ...");
+        //
+        // const data = {
+        //     topic: "market.eosusdt.trade.detail"
+        // }
+        // ws.send(JSON.stringify(data))
+        setInterval(function () {
+            const ping = {
+                ping: new Date().getTime()
+            }
+            ws.send(JSON.stringify(ping))
+        }, 2000)
+        // ws.close()
+
+    };
+
+    ws.onmessage = function (evt) {
+        console.log("Received Message: " + evt.data);
+    };
+
+    ws.onclose = function (evt) {
+        console.log("Connection closed.");
+    };
+</script>
+
+</html>
