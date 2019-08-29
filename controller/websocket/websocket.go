@@ -58,7 +58,7 @@ func Kline(c *gin.Context) {
 				market.Subscribe(message.(string), func(topic string, json *huobiapi.JSON) {
 					// 收到数据更新时回调
 					isSubscriped = true
-					fmt.Println(json)
+					//fmt.Println(json)
 					jsonByte, _ := json.MarshalJSON()
 					err = ws.WriteMsg(1, jsonByte)
 					if err != nil {
