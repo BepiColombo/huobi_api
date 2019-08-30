@@ -26,3 +26,8 @@ func Init() {
 	}
 	router.Run(":7577")
 }
+
+
+//例：第一条获取的数据的close值为 num
+//Y轴最高值：num+num*10%
+//Y轴最低值：num-num*10%
